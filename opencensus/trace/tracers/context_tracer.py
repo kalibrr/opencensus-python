@@ -144,6 +144,9 @@ class ContextTracer(base.Tracer):
         :param attribute_value: Attribute value.
         """
         current_span = self.current_span()
+        if current_span is None:
+            logging.warning("No active span -- unable to add attribute to current span")
+            return
         current_span.add_attribute(attribute_key, attribute_value)
 
     def get_span_datas(self, span):
